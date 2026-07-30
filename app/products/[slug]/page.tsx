@@ -126,7 +126,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
               <hr className="border-border" />
 
               {/* ── Quantity + Add to Cart (client component) ──────────── */}
-              <QuantitySelector />
+              <QuantitySelector productId={product.id} />
             </div>
           </div>
         </section>

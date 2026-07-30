@@ -13,6 +13,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { useAuth, signInWithGoogle, signOutUser } from "@/lib/firebase";
+import { useCart } from "@/contexts/CartContext";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -190,6 +191,7 @@ function UserMenu() {
 
 export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { itemCount, openDrawer } = useCart();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-surface/80 backdrop-blur-md">
@@ -231,21 +233,22 @@ export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
           <UserMenu />
 
           {/* Cart button */}
-          <Link
-            href="/cart"
-            aria-label={`Cart — ${cartItemCount} item${cartItemCount !== 1 ? "s" : ""}`}
+          <button
+            type="button"
+            aria-label={`Cart — ${itemCount} item${itemCount !== 1 ? "s" : ""}`}
+            onClick={openDrawer}
             className="relative rounded-md p-2 text-muted transition-colors hover:bg-secondary hover:text-secondary-foreground"
           >
             <ShoppingCart size={20} strokeWidth={1.75} />
-            {cartItemCount > 0 && (
+            {itemCount > 0 && (
               <span
                 aria-hidden="true"
                 className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold leading-none text-white"
               >
-                {cartItemCount > 99 ? "99+" : cartItemCount}
+                {itemCount > 99 ? "99+" : itemCount}
               </span>
             )}
-          </Link>
+          </button>
 
           {/* Hamburger — mobile only */}
           <button
