@@ -45,11 +45,11 @@ export async function generateMetadata({
   const product = await getProduct(slug);
 
   if (!product) {
-    return { title: "Product Not Found | ShopWave" };
+    return { title: "Product Not Found" };
   }
 
   return {
-    title: `${product.name} | ShopWave`,
+    title: product.name,
     description: product.description,
   };
 }

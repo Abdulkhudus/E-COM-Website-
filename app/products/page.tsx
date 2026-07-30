@@ -9,7 +9,7 @@ import { PackageSearch } from "lucide-react";
 // ─── Meta ─────────────────────────────────────────────────────────────────────
 
 export const metadata = {
-  title: "All Products | LiveWire",
+  title: "Shop All Products",
   description: "Browse our full catalogue — search by name or filter by category.",
 };
 
