@@ -1,65 +1,54 @@
-import Image from "next/image";
+import { ShoppingBag } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-background text-foreground px-4 py-10">
+      {/* ── TEMPORARY DESIGN-SYSTEM DEMO — remove once confirmed ── */}
+      <section className="mx-auto max-w-lg space-y-6 rounded-2xl border border-border bg-surface p-6 shadow-sm">
+        <h1 className="text-xl font-semibold text-foreground">
+          Design System Check
+        </h1>
+
+        {/* Color swatches */}
+        <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col items-center gap-1">
+            <div className="h-12 w-20 rounded-lg bg-primary" />
+            <span className="text-xs text-muted">primary</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <div className="h-12 w-20 rounded-lg bg-secondary" />
+            <span className="text-xs text-muted">secondary</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <div className="h-12 w-20 rounded-lg bg-accent" />
+            <span className="text-xs text-muted">accent</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <div className="h-12 w-20 rounded-lg bg-success" />
+            <span className="text-xs text-muted">success</span>
+          </div>
+          <div className="flex flex-col items-center gap-1">
+            <div className="h-12 w-20 rounded-lg bg-error" />
+            <span className="text-xs text-muted">error</span>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+
+        {/* Text on primary */}
+        <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 sm:w-auto">
+          <ShoppingBag size={16} />
+          Add to Cart
+        </button>
+
+        {/* Secondary variant */}
+        <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-secondary px-5 py-3 text-sm font-medium text-secondary-foreground transition-opacity hover:opacity-90 sm:w-auto">
+          <ShoppingBag size={16} />
+          Secondary Button
+        </button>
+
+        <p className="text-xs text-muted">
+          Remove this demo block from app/page.tsx once confirmed.
+        </p>
+      </section>
+    </main>
   );
 }
