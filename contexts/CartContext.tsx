@@ -123,6 +123,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
     fetchCart(user.uid);
   }, [user, fetchCart]);
 
+  // ── updateQuantity ───────────────────────────────────────────────────────────
+  const updateQuantity = useCallback(async (itemId: string, quantity: number) => {
+    const res  = await fetch("/api/cart", {
+      method:  "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify({ id: itemId, quantity }),
+    });
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error ?? "Failed to update quantity");
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === itemId ? { ...item, quantity: json.item.quantity } : item
+      )
+    );
+  }, []);
+
   const addToCart = useCallback(
     async (productId: string, quantity = 1) => {
       if (!user) throw new Error("not-signed-in");
@@ -146,21 +162,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     [user, enrichItems, items, updateQuantity]
   );
 
-  // ── updateQuantity ───────────────────────────────────────────────────────────
-  const updateQuantity = useCallback(async (itemId: string, quantity: number) => {
-    const res  = await fetch("/api/cart", {
-      method:  "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ id: itemId, quantity }),
-    });
-    const json = await res.json();
-    if (!json.success) throw new Error(json.error ?? "Failed to update quantity");
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === itemId ? { ...item, quantity: json.item.quantity } : item
-      )
-    );
-  }, []);
+
 
   // ── removeFromCart ───────────────────────────────────────────────────────────
   const removeFromCart = useCallback(async (itemId: string) => {
