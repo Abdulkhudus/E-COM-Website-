@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import ProductFilters from "./ProductFilters";
 import type { Product } from "@/app/api/products/route";
+import { fetchProducts } from "@/app/api/products/route";
 import { PackageSearch } from "lucide-react";
 
 // ─── Meta ─────────────────────────────────────────────────────────────────────
@@ -16,15 +17,11 @@ export const metadata = {
 // ─── Data fetching ────────────────────────────────────────────────────────────
 
 async function getProducts(search?: string, category?: string): Promise<Product[]> {
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-  const url  = new URL("/api/products", base);
-  if (search)   url.searchParams.set("search",   search);
-  if (category) url.searchParams.set("category", category);
-
-  const res = await fetch(url.toString(), { cache: "no-store" });
-  if (!res.ok) throw new Error("Failed to fetch products");
-  const json = await res.json();
-  return json.products as Product[];
+  try {
+    return await fetchProducts(search, category);
+  } catch (error) {
+    throw new Error("Failed to fetch products");
+  }
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────

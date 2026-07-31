@@ -6,32 +6,17 @@ import { ArrowLeft, Minus, Plus, ShoppingCart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import QuantitySelector from "./QuantitySelector";
+import type { Product } from "@/app/api/products/[slug]/route";
+import { fetchProductBySlug } from "@/app/api/products/[slug]/route";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  image_url: string;
-  category: string;
-  slug: string;
-}
-
-// ─── Data fetching ────────────────────────────────────────────────────────────
-
 async function getProduct(slug: string): Promise<Product | null> {
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-  const res = await fetch(`${base}/api/products/${slug}`, {
-    cache: "no-store",
-  });
-
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error("Failed to fetch product");
-
-  const json = await res.json();
-  return json.product as Product;
+  try {
+    return await fetchProductBySlug(slug);
+  } catch (error) {
+    throw new Error("Failed to fetch product");
+  }
 }
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────

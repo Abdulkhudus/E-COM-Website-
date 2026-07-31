@@ -24,7 +24,7 @@ export interface Product {
  * ?search=   → case-insensitive ILIKE match on the `name` column
  * ?category= → exact match on the `category` column
  */
-async function fetchProducts(search?: string, category?: string): Promise<Product[]> {
+export async function fetchProducts(search?: string, category?: string): Promise<Product[]> {
   let query = supabase
     .from("products")
     .select("id, name, description, price, image_url, category, slug");

@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-interface Product {
+export interface Product {
   id: string;
   name: string;
   description: string;
@@ -22,7 +22,7 @@ interface Product {
  * Look up a single product by its slug from the Supabase `products` table.
  * Returns null (without throwing) when the slug doesn't match any row.
  */
-async function fetchProductBySlug(slug: string): Promise<Product | null> {
+export async function fetchProductBySlug(slug: string): Promise<Product | null> {
   const { data, error } = await supabase
     .from("products")
     .select("id, name, description, price, image_url, category, slug")
