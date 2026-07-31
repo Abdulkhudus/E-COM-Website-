@@ -32,7 +32,9 @@ interface CartContextValue {
   loading: boolean;
   /** Total individual units across all cart items */
   itemCount: number;
-  /** Pre-formatted subtotal string, e.g. "$129.97" */
+  /** Raw numeric subtotal (in rupees) */
+  subtotalNum: number;
+  /** Pre-formatted subtotal string, e.g. "₹129.97" */
   subtotal: string;
   /** Cart drawer visibility */
   drawerOpen: boolean;
@@ -121,10 +123,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     fetchCart(user.uid);
   }, [user, fetchCart]);
 
-  // ── addToCart ────────────────────────────────────────────────────────────────
   const addToCart = useCallback(
     async (productId: string, quantity = 1) => {
       if (!user) throw new Error("not-signed-in");
+
+      const existingItem = items.find((i) => i.product_id === productId);
+      if (existingItem) {
+        await updateQuantity(existingItem.id, existingItem.quantity + quantity);
+        return;
+      }
+
       const res  = await fetch("/api/cart", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
@@ -135,7 +143,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const [enriched] = await enrichItems([json.item as CartItem]);
       setItems((prev) => [...prev, enriched]);
     },
-    [user, enrichItems]
+    [user, enrichItems, items, updateQuantity]
   );
 
   // ── updateQuantity ───────────────────────────────────────────────────────────
@@ -173,9 +181,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
     (sum, i) => sum + (i.product?.price ?? 0) * i.quantity,
     0
   );
-  const subtotal = new Intl.NumberFormat("en-US", {
+  const subtotal = new Intl.NumberFormat("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
   }).format(subtotalNum);
 
   return (
@@ -184,6 +192,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         items,
         loading,
         itemCount,
+        subtotalNum,
         subtotal,
         drawerOpen,
         openDrawer:     () => setDrawerOpen(true),

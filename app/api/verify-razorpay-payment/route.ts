@@ -23,8 +23,15 @@ export async function POST(request: Request) {
       .update(body.toString())
       .digest("hex");
 
-    // 3) & 4) Verify signature
-    if (expectedSignature === razorpay_signature) {
+    // 3) & 4) Verify signature — use timingSafeEqual to prevent timing attacks
+    const expectedBuf = Buffer.from(expectedSignature, "hex");
+    const receivedBuf = Buffer.from(razorpay_signature, "hex");
+
+    const isValid =
+      expectedBuf.length === receivedBuf.length &&
+      crypto.timingSafeEqual(expectedBuf, receivedBuf);
+
+    if (isValid) {
       // Signature matches, update order status to 'paid'
       const { error } = await supabase
         .from("orders")

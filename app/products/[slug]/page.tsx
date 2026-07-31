@@ -7,14 +7,15 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import QuantitySelector from "./QuantitySelector";
 import type { Product } from "@/app/api/products/[slug]/route";
-import { fetchProductBySlug } from "@/app/api/products/[slug]/route";
+import { fetchProductBySlugOrId } from "@/app/api/products/[slug]/route";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 async function getProduct(slug: string): Promise<Product | null> {
   try {
-    return await fetchProductBySlug(slug);
+    return await fetchProductBySlugOrId(slug);
   } catch (error) {
+    console.error("[getProduct] underlying error:", error);
     throw new Error("Failed to fetch product");
   }
 }
@@ -51,9 +52,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   if (!product) notFound();
 
-  const formattedPrice = new Intl.NumberFormat("en-US", {
+  const formattedPrice = new Intl.NumberFormat("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
   }).format(product.price);
 
   return (

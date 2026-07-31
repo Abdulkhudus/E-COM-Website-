@@ -177,7 +177,7 @@ export default function CartDrawer() {
                     </p>
                     <p className="text-sm font-bold text-primary">
                       {item.product
-                        ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(
+                        ? new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(
                             item.product.price * item.quantity
                           )
                         : "—"}

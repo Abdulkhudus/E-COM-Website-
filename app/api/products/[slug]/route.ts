@@ -19,19 +19,22 @@ export interface Product {
 // The GET handler below stays unchanged.
 
 /**
- * Look up a single product by its slug from the Supabase `products` table.
- * Returns null (without throwing) when the slug doesn't match any row.
+ * Look up a single product by its slug or id from the Supabase `products` table.
+ * Returns null (without throwing) when the parameter doesn't match any row.
  */
-export async function fetchProductBySlug(slug: string): Promise<Product | null> {
+export async function fetchProductBySlugOrId(param: string): Promise<Product | null> {
+  const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(param);
+
   const { data, error } = await supabase
     .from("products")
     .select("id, name, description, price, image_url, category, slug")
-    .eq("slug", slug)
+    .eq(isUuid ? "id" : "slug", param)
     .single();
 
   // PGRST116 = "The result contains 0 rows" — treat as not-found, not an error
   if (error) {
     if (error.code === "PGRST116") return null;
+    console.error("[Supabase fetchProductBySlug] error:", JSON.stringify(error));
     throw new Error(error.message);
   }
 
@@ -47,7 +50,7 @@ export async function GET(
   const { slug } = await params;
 
   try {
-    const product = await fetchProductBySlug(slug);
+    const product = await fetchProductBySlugOrId(slug);
 
     if (!product) {
       return NextResponse.json(

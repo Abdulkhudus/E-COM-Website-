@@ -116,7 +116,7 @@ function loadRazorpayScript(): Promise<void> {
 export default function CheckoutPage() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
-  const { items, loading: cartLoading, subtotal } = useCart();
+  const { items, loading: cartLoading, subtotalNum, subtotal } = useCart();
 
   const [paymentState, setPaymentState] = useState<PaymentState>("idle");
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -143,10 +143,10 @@ export default function CheckoutPage() {
     if (!authLoading && !user) router.push("/");
   }, [user, authLoading, router]);
 
-  const totalAmount = items.reduce(
-    (sum, item) => sum + (item.product?.price ?? 0) * item.quantity,
-    0
-  );
+  // Use the CartContext's computed subtotal as the single source of truth.
+  // (item.product may be undefined if enrichment silently failed, causing a
+  // recompute here to produce 0 — which Razorpay rejects.)
+  const totalAmount = subtotalNum;
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -276,6 +276,10 @@ export default function CheckoutPage() {
     if (!validate()) return;
     if (!user) return;
     if (items.length === 0) return;
+    if (totalAmount <= 0) {
+      setSubmitError("Cart total could not be calculated. Please refresh and try again.");
+      return;
+    }
 
     setPaymentState("submitting");
 

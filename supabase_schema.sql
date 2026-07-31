@@ -26,8 +26,14 @@ CREATE TABLE IF NOT EXISTS public.orders (
   status text NOT NULL DEFAULT 'pending',
   total_amount numeric NOT NULL,
   shipping_details jsonb NOT NULL,
+  razorpay_order_id text,
+  razorpay_payment_id text,
   created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );
+
+-- Add columns if table already existed without them
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS razorpay_order_id text;
+ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS razorpay_payment_id text;
 
 -- ─── Order Items Table ────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS public.order_items (

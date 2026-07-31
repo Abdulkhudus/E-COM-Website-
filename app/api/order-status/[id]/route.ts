@@ -18,9 +18,9 @@ import { supabase } from "@/lib/supabase";
  */
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
 
   // ── 1. Validate the param ────────────────────────────────────────────────────
   if (!id || id.trim() === "") {

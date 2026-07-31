@@ -1,14 +1,15 @@
 import Razorpay from "razorpay";
 
-if (!process.env.RAZORPAY_KEY_ID) {
-  throw new Error("Missing RAZORPAY_KEY_ID environment variable");
+const keyId = process.env.RAZORPAY_KEY_ID;
+const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+if (!keyId || !keySecret) {
+  console.warn(
+    "[razorpay] RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET is missing. " +
+      "Razorpay payments will be unavailable until both are set in .env.local."
+  );
 }
 
-if (!process.env.RAZORPAY_KEY_SECRET) {
-  throw new Error("Missing RAZORPAY_KEY_SECRET environment variable");
-}
-
-export const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+export const razorpay = keyId && keySecret
+  ? new Razorpay({ key_id: keyId, key_secret: keySecret })
+  : null;

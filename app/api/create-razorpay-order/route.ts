@@ -3,6 +3,13 @@ import { razorpay } from "@/lib/razorpay";
 import { supabase } from "@/lib/supabase";
 
 export async function POST(request: Request) {
+  if (!razorpay) {
+    return NextResponse.json(
+      { error: "Razorpay is not configured. Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in .env.local." },
+      { status: 503 }
+    );
+  }
+
   try {
     const { order_id } = await request.json();
 
@@ -23,6 +30,12 @@ export async function POST(request: Request) {
     }
 
     // 3) Create a Razorpay Order for that amount in paise (total_amount * 100).
+    if (!order.total_amount || order.total_amount <= 0) {
+      return NextResponse.json(
+        { error: `Invalid order amount: ₹${order.total_amount}. Cannot create a Razorpay order.` },
+        { status: 400 }
+      );
+    }
     const amountInPaise = Math.round(order.total_amount * 100);
 
     const razorpayOrder = await razorpay.orders.create({
