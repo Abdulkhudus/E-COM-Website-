@@ -164,7 +164,7 @@ export default function AdminProductsPage() {
                   <tr key={product.id} className="hover:bg-background/50 transition-colors">
                     <td className="px-6 py-4 font-medium text-foreground">{product.name}</td>
                     <td className="px-6 py-4 text-muted">{product.category}</td>
-                    <td className="px-6 py-4 text-foreground">${product.price.toFixed(2)}</td>
+                    <td className="px-6 py-4 text-foreground">₹{product.price.toFixed(2)}</td>
                     <td className="px-6 py-4 text-muted">{product.stock ?? "N/A"}</td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
@@ -254,7 +254,7 @@ export default function AdminProductsPage() {
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-sm font-medium text-foreground">Price ($)</label>
+                  <label className="text-sm font-medium text-foreground">Price (₹)</label>
                   <input
                     required
                     type="number"

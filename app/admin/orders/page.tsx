@@ -131,7 +131,7 @@ export default function AdminOrdersPage() {
                       {order.shipping_details?.name || "Unknown"}
                     </td>
                     <td className="px-6 py-4 text-foreground font-medium">
-                      ${order.total_amount.toFixed(2)}
+                      ₹{order.total_amount.toFixed(2)}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">

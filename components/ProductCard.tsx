@@ -18,9 +18,9 @@ export interface ProductCardProps {
 // ─── ProductCard ──────────────────────────────────────────────────────────────
 
 export default function ProductCard({ image, name, price, slug }: ProductCardProps) {
-  const formattedPrice = new Intl.NumberFormat("en-US", {
+  const formattedPrice = new Intl.NumberFormat("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
   }).format(price);
 
   return (
