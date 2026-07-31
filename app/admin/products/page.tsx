@@ -170,15 +170,17 @@ export default function AdminProductsPage() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => handleOpenModal(product)}
-                          className="p-2 text-muted hover:text-blue-500 rounded-md hover:bg-blue-500/10 transition-colors"
+                          className="p-2 text-muted hover:text-primary rounded-md hover:bg-primary/10 transition-colors"
                           title="Edit"
+                          aria-label={`Edit ${product.name}`}
                         >
                           <Edit className="h-4 w-4" />
                         </button>
                         <button
                           onClick={() => confirmDelete(product.id)}
-                          className="p-2 text-muted hover:text-red-500 rounded-md hover:bg-red-500/10 transition-colors"
+                          className="p-2 text-muted hover:text-error rounded-md hover:bg-error/10 transition-colors"
                           title="Delete"
+                          aria-label={`Delete ${product.name}`}
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -198,7 +200,7 @@ export default function AdminProductsPage() {
           <div className="bg-surface rounded-xl shadow-lg w-full max-w-lg max-h-full overflow-y-auto">
             <div className="flex items-center justify-between p-4 border-b border-border sticky top-0 bg-surface z-10">
               <h2 className="text-lg font-bold text-foreground">{editingProduct ? "Edit Product" : "Add Product"}</h2>
-              <button onClick={handleCloseModal} className="text-muted hover:text-foreground">
+              <button onClick={handleCloseModal} aria-label="Close" className="text-muted hover:text-foreground">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -293,8 +295,8 @@ export default function AdminProductsPage() {
       {isDeleteAlertOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-surface rounded-xl shadow-lg w-full max-w-sm p-6 text-center border border-border">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 mb-4">
-              <AlertCircle className="h-6 w-6 text-red-600" />
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-error/10 mb-4">
+              <AlertCircle className="h-6 w-6 text-error" />
             </div>
             <h2 className="text-lg font-bold text-foreground mb-2">Delete Product</h2>
             <p className="text-muted mb-6">Are you sure you want to delete this product? This action cannot be undone.</p>
@@ -307,7 +309,7 @@ export default function AdminProductsPage() {
               </button>
               <button
                 onClick={handleDelete}
-                className="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors shadow-sm"
+                className="w-full sm:w-auto px-4 py-2 bg-error text-white rounded-md hover:opacity-90 transition-colors shadow-sm"
               >
                 Delete Product
               </button>

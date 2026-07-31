@@ -32,9 +32,9 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
     notFound();
   }
 
-  const formattedTotal = new Intl.NumberFormat("en-US", {
+  const formattedTotal = new Intl.NumberFormat("en-IN", {
     style: "currency",
-    currency: "USD",
+    currency: "INR",
   }).format(order.total_amount);
 
   return (
@@ -57,7 +57,7 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border pb-4 mb-4 gap-4">
               <div>
                 <p className="text-sm font-semibold text-muted">Order ID</p>
-                <p className="text-sm font-mono font-bold text-foreground mt-0.5">{order.id}</p>
+                <p className="break-all text-sm font-mono font-bold text-foreground mt-0.5">{order.id}</p>
               </div>
               <div className="sm:text-right">
                 <p className="text-sm font-semibold text-muted">Status</p>
@@ -85,9 +85,9 @@ export default async function OrderConfirmationPage({ params }: PageProps) {
                   <p className="text-sm text-muted">No shipping details provided.</p>
                 )}
               </div>
-              <div className="sm:text-right flex flex-col justify-end">
+              <div className="sm:text-right flex flex-col sm:justify-end">
                 <p className="text-sm font-semibold text-muted mb-1">Total Amount Paid</p>
-                <p className="text-3xl font-extrabold text-primary">{formattedTotal}</p>
+                <p className="text-2xl sm:text-3xl font-extrabold text-primary">{formattedTotal}</p>
               </div>
             </div>
           </div>

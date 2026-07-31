@@ -598,7 +598,7 @@ export default function CheckoutPage() {
             <div className="rounded-2xl border border-border bg-surface p-6">
               <h2 className="text-xl font-bold text-foreground mb-6">Order Summary</h2>
 
-              <ul className="flex flex-col gap-4 mb-6 max-h-[400px] overflow-y-auto pr-2">
+              <ul className="flex flex-col gap-4 mb-6 max-h-[260px] sm:max-h-[400px] overflow-y-auto pr-1 -mr-1">
                 {items.map((item) => (
                   <li key={item.id} className="flex gap-4">
                     <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-secondary border border-border">

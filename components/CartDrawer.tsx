@@ -61,7 +61,7 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-label="Shopping cart"
-        className="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-surface shadow-2xl"
+        className="fixed inset-y-0 right-0 z-50 flex w-full sm:max-w-md flex-col bg-surface shadow-2xl"
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border px-5 py-4">
@@ -192,11 +192,11 @@ export default function CartDrawer() {
                           aria-label="Decrease quantity"
                           disabled={item.quantity <= 1}
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="flex h-7 w-7 items-center justify-center text-muted transition-colors hover:bg-secondary hover:text-foreground disabled:opacity-30"
+                          className="flex h-9 w-9 items-center justify-center text-muted transition-colors hover:bg-secondary hover:text-foreground disabled:opacity-30"
                         >
                           <Minus size={13} strokeWidth={2.5} />
                         </button>
-                        <span className="flex h-7 w-8 items-center justify-center border-x border-border text-xs font-bold text-foreground">
+                        <span className="flex h-9 w-8 items-center justify-center border-x border-border text-xs font-bold text-foreground">
                           {item.quantity}
                         </span>
                         <button
@@ -204,7 +204,7 @@ export default function CartDrawer() {
                           aria-label="Increase quantity"
                           disabled={item.quantity >= 99}
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="flex h-7 w-7 items-center justify-center text-muted transition-colors hover:bg-secondary hover:text-foreground disabled:opacity-30"
+                          className="flex h-9 w-9 items-center justify-center text-muted transition-colors hover:bg-secondary hover:text-foreground disabled:opacity-30"
                         >
                           <Plus size={13} strokeWidth={2.5} />
                         </button>
@@ -215,7 +215,7 @@ export default function CartDrawer() {
                         type="button"
                         aria-label="Remove item"
                         onClick={() => removeFromCart(item.id)}
-                        className="rounded-md p-1.5 text-muted transition-colors hover:bg-secondary hover:text-error"
+                        className="rounded-md p-2 text-muted transition-colors hover:bg-secondary hover:text-error"
                       >
                         <Trash2 size={15} strokeWidth={2} />
                       </button>

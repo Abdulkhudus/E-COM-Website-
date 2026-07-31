@@ -57,3 +57,25 @@ VALUES
   ('Bluetooth Speaker', 'Waterproof portable bluetooth speaker with deep bass.', 75.99, 'https://picsum.photos/seed/speaker/600', 'Audio', 'bluetooth-speaker'),
   ('Aluminium Laptop Stand', 'Ergonomic laptop stand made from premium aluminium.', 45.00, 'https://picsum.photos/seed/stand/600', 'Accessories', 'aluminium-laptop-stand')
 ON CONFLICT (slug) DO NOTHING;
+
+-- Enable Row Level Security (RLS)
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.cart_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
+
+-- Policies for products (publicly readable)
+CREATE POLICY "Products are publicly readable" 
+ON public.products FOR SELECT 
+TO public 
+USING (true);
+
+-- Policies for cart_items (restrict to matching user_id)
+CREATE POLICY "Users can manage their own cart" 
+ON public.cart_items FOR ALL 
+USING (user_id = auth.uid()::text);
+
+-- Policies for orders (restrict to matching user_id)
+CREATE POLICY "Users can manage their own orders" 
+ON public.orders FOR ALL 
+USING (user_id = auth.uid()::text);
+

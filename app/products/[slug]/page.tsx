@@ -62,7 +62,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
       <Navbar />
 
       <main className="flex-1">
-        <section className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+        <section className="mx-auto w-full max-w-6xl px-4 py-10 pb-16 sm:px-6 sm:py-14 lg:px-8">
           {/* ── Breadcrumb / back link ──────────────────────────────────────── */}
           <Link
             href="/products"
@@ -75,7 +75,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
           {/* ── Product layout ─────────────────────────────────────────────── */}
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
             {/* ── Image ──────────────────────────────────────────────────── */}
-            <div className="relative aspect-square overflow-hidden rounded-2xl border border-border bg-secondary">
+            <div className="relative aspect-square max-h-[420px] w-full overflow-hidden rounded-2xl border border-border bg-secondary lg:max-h-none">
               <Image
                 src={product.image_url}
                 alt={product.name}

@@ -102,7 +102,7 @@ export default function Home() {
           <div className="mt-12 flex justify-center">
             <a
               href="/products"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-7 py-3 text-sm font-semibold text-foreground shadow-sm transition-all duration-200 hover:border-primary hover:text-primary"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-border bg-surface px-7 py-3 text-sm font-semibold text-foreground shadow-sm transition-all duration-200 hover:border-primary hover:text-primary"
             >
               View All Products
             </a>

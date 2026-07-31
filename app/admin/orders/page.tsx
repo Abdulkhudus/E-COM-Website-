@@ -69,10 +69,10 @@ export default function AdminOrdersPage() {
 
   const getStatusIcon = (status: string) => {
     switch(status.toLowerCase()) {
-      case 'paid': return <Check className="h-4 w-4 text-green-500" />;
-      case 'shipped': return <Truck className="h-4 w-4 text-blue-500" />;
-      case 'delivered': return <Package className="h-4 w-4 text-purple-500" />;
-      default: return <Clock className="h-4 w-4 text-amber-500" />;
+      case 'paid': return <Check className="h-4 w-4 text-success" />;
+      case 'shipped': return <Truck className="h-4 w-4 text-primary" />;
+      case 'delivered': return <Package className="h-4 w-4 text-secondary-foreground" />;
+      default: return <Clock className="h-4 w-4 text-accent" />;
     }
   };
 

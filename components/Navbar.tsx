@@ -249,13 +249,13 @@ export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
             type="button"
             aria-label={`Cart — ${itemCount} item${itemCount !== 1 ? "s" : ""}`}
             onClick={openDrawer}
-            className="relative rounded-md p-2 text-muted transition-colors hover:bg-secondary hover:text-secondary-foreground"
+            className="relative rounded-md p-2.5 text-muted transition-colors hover:bg-secondary hover:text-secondary-foreground"
           >
             <ShoppingCart size={20} strokeWidth={1.75} />
             {itemCount > 0 && (
               <span
                 aria-hidden="true"
-                className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold leading-none text-white"
+                className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[10px] font-bold leading-none text-primary-foreground"
               >
                 {itemCount > 99 ? "99+" : itemCount}
               </span>
