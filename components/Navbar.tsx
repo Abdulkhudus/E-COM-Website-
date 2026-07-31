@@ -11,9 +11,11 @@ import {
   LogOut,
   ChevronDown,
   Loader2,
+  ShieldCheck,
 } from "lucide-react";
 import { useAuth, signInWithGoogle, signOutUser } from "@/lib/firebase";
 import { useCart } from "@/contexts/CartContext";
+import { isAdmin } from "@/lib/isAdmin";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -192,6 +194,7 @@ function UserMenu() {
 export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { itemCount, openDrawer } = useCart();
+  const { user } = useAuth();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-surface/80 backdrop-blur-md">
@@ -224,6 +227,15 @@ export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
               {label}
             </Link>
           ))}
+          {user && isAdmin(user.email) && (
+            <Link
+              href="/admin"
+              className="flex items-center gap-1.5 rounded-md px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+            >
+              <ShieldCheck size={16} strokeWidth={2} />
+              Admin
+            </Link>
+          )}
         </nav>
 
         {/* ── Right: Auth + Cart + Hamburger ───────────────────────────── */}
@@ -287,6 +299,16 @@ export default function Navbar({ cartItemCount = 0 }: NavbarProps) {
                 {label}
               </Link>
             ))}
+            {user && isAdmin(user.email) && (
+              <Link
+                href="/admin"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+              >
+                <ShieldCheck size={16} strokeWidth={2} />
+                Admin
+              </Link>
+            )}
           </nav>
         </div>
       )}
